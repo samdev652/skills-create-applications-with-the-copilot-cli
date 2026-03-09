@@ -2,10 +2,13 @@
  * Node.js CLI Calculator
  *
  * Supported operations:
- *   - Addition       (+): add(a, b)
- *   - Subtraction    (-): subtract(a, b)
- *   - Multiplication (×): multiply(a, b)
- *   - Division       (÷): divide(a, b)
+ *   - Addition       (+):  add(a, b)
+ *   - Subtraction    (-):  subtract(a, b)
+ *   - Multiplication (×):  multiply(a, b)
+ *   - Division       (÷):  divide(a, b)
+ *   - Modulo         (%):  modulo(a, b)
+ *   - Power          (**): power(base, exponent)
+ *   - Square Root    (√):  squareRoot(n)
  */
 
 'use strict';
@@ -57,6 +60,43 @@ function divide(a, b) {
 }
 
 /**
+ * Modulo: returns the remainder of a divided by b.
+ * Throws an error if b is zero.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
+function modulo(a, b) {
+  if (b === 0) {
+    throw new Error('Modulo by zero is not allowed');
+  }
+  return a % b;
+}
+
+/**
+ * Power (Exponentiation): returns base raised to the exponent.
+ * @param {number} base
+ * @param {number} exponent
+ * @returns {number}
+ */
+function power(base, exponent) {
+  return Math.pow(base, exponent);
+}
+
+/**
+ * Square Root: returns the square root of n.
+ * Throws an error if n is negative.
+ * @param {number} n
+ * @returns {number}
+ */
+function squareRoot(n) {
+  if (n < 0) {
+    throw new Error('Square root of a negative number is not allowed');
+  }
+  return Math.sqrt(n);
+}
+
+/**
  * Evaluates a calculation given two operands and an operator.
  * @param {number} a
  * @param {string} operator  One of: +, -, *, /
@@ -71,8 +111,10 @@ function calculate(a, operator, b) {
     case '×': return multiply(a, b);
     case '/':
     case '÷': return divide(a, b);
+    case '%': return modulo(a, b);
+    case '**': return power(a, b);
     default:
-      throw new Error(`Unknown operator: "${operator}". Use +, -, *, /`);
+      throw new Error(`Unknown operator: "${operator}". Use +, -, *, /, %, **`);
   }
 }
 
@@ -126,4 +168,4 @@ if (require.main === module) {
   prompt();
 }
 
-module.exports = { add, subtract, multiply, divide, calculate };
+module.exports = { add, subtract, multiply, divide, modulo, power, squareRoot, calculate };
